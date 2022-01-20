@@ -19,6 +19,12 @@ defmodule Kandesk.Util do
 
   def tag_checked?(id, tags), do: Enum.any?(tags, &(&1.id == id)) and "checked"
 
+  def tag_changes_checked?(_id, changes) when changes == %{}, do: false
+
+  def tag_changes_checked?(id, changes) do
+    Enum.any?(changes.tags, &(&1.changes.id == id)) and "checked"
+  end
+
   ## if_attrs overcomes heex limitation with dynamic attributes that returns nil
   ## by returning [] instead
   defmacro if_attrs(clause, do: expression) do
